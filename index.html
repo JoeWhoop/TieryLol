@@ -2,60 +2,76 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Mechanik</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mechanik – Spare Parts</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
-
-    .container {
-      max-width: 420px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
     }
 
     h1 {
-      font-size: 18px;
-      margin: 15px 0 8px;
+      font-size: 56px;
+      text-align: center;
+      margin: 18px 0 10px;
     }
 
-    select {
-      width: 100%;
-      padding: 8px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      gap: 8px;
+      padding: 10px;
       box-sizing: border-box;
     }
 
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 12px;
-      font-size: 16px;
-      background: #2c7be5;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+    select {
+      width: 90%;
+      max-width: 900px;
+      height: 90px;
+      font-size: 40px;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    button:hover {
-      background: #1a66d1;
+    #goButton {
+      margin-top: 40px;
+      padding: 20px 40px;
+      font-size: 36px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    #goButton:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>Spare Part:</h1>
-    <select id="stationDropdown" size="10">
+    <h1>SPARE PART</h1>
+    <select id="sparePartDropdown">
+      <option value="">— wybierz część —</option>
       <option value="4001692_DISPLAY">4001692 DISPLAY</option>
       <option value="4000172_DISPLAY_COVER">4000172 DISPLAY COVER</option>
       <option value="4000161_MANETKA">4000161 MANETKA</option>
-      <option value="4000618_GUZIK_DO_KIERUNKOWSKAZOW">4000618 GUZIK DO KIERUNKOWSKAZÓW</option>
+      <option value="40000618_GUZIK_DO_KIERUNKOWSKAZOW">40000618 GUZIK DO KIERUNKOWSKAZÓW</option>
       <option value="4000169_KLAMKA_LEWA">4000169 KLAMKA LEWA</option>
       <option value="4000162_KLAMKA_PRAWA">4000162 KLAMKA PRAWA</option>
       <option value="4000182_SWIATELKO_KIEROWNIC">4000182 ŚWIATEŁKO KIEROWNIC</option>
@@ -73,8 +89,9 @@
       <option value="4001006_SILNIK_BEZ_OPONY">4001006 SILNIK BEZ OPONY</option>
     </select>
 
-    <h1>Znajdź siebie:</h1>
-    <select id="mechanicDropdown" size="10">
+    <h1>MECHANIC</h1>
+    <select id="mechanicDropdown">
+      <option value="">— wybierz mechanika —</option>
       <option value="ARTEM_MAKOVETSKYI">ARTEM_MAKOVETSKYI</option>
       <option value="DAWID_PIETRZYCKI">DAWID_PIETRZYCKI</option>
       <option value="KINGA_SZCZENIOWSKA">KINGA_SZCZENIOWSKA</option>
@@ -88,34 +105,30 @@
       <option value="NATALIIA_VASALAKIIEVA">NATALIIA_VASALAKIIEVA</option>
     </select>
 
-    <button id="goButton">Go</button>
+    <button id="goButton" type="button">GO</button>
   </div>
 
   <script>
-    document.getElementById("goButton").addEventListener("click", () => {
-      const sparePart = document.getElementById("stationDropdown").value;
-      const mechanic = document.getElementById("mechanicDropdown").value;
+    // WAŻNE:
+    // Ten kod NIE pokazuje alertu "Zapisano" – od razu przekierowuje.
+    // Jeśli dalej widzisz "Zapisano", to znaczy że w przeglądarce masz wgraną STARĄ wersję pliku.
 
-      if (!sparePart || !mechanic) {
-        alert("Wybierz część (Spare Part) oraz mechanika.");
+    document.getElementById("goButton").addEventListener("click", function () {
+      const mechanic = document.getElementById("mechanicDropdown").value;
+      const sparePart = document.getElementById("sparePartDropdown").value;
+
+      if (!mechanic || !sparePart) {
+        alert("Wybierz mechanika i część.");
         return;
       }
 
-      const sessionData = {
-        sparePart,
-        mechanic,
-        timestamp: new Date().toISOString()
-      };
+      const url =
+        "https://web.miniextensions.com/iZC8bQQmgC94HrP8oiSm" +
+        "?prefill_Mechanic=" + encodeURIComponent(mechanic) +
+        "&prefill_Spare_Part=" + encodeURIComponent(sparePart);
 
-      localStorage.setItem("mechanikSession", JSON.stringify(sessionData));
-
-      alert(
-        "Zapisano:\n" +
-        "Mechanik: " + mechanic + "\n" +
-        "Spare Part: " + sparePart
-      );
-
-      console.log("SESSION:", sessionData);
+      // przekierowanie (najpewniejsze)
+      window.location.assign(url);
     });
   </script>
 </body>
