@@ -5,7 +5,7 @@ document.getElementById("goButton").addEventListener("click", function () {
     selectedMechanic = selectedMechanic.toUpperCase().replace(" ", "_");
     selectedStation = selectedStation.toUpperCase().replace(" ", "_");
 
-    var baseRedirectURL = "https://web.miniextensions.com/TAm18MNz3NlswuLvUliV?prefill_Mechanic=" + selectedMechanic;
+    var baseRedirectURL = "https://web.miniextensions.com/iZC8bQQmgC94HrP8oiSm?prefill_Mechanic=" + selectedMechanic;
 
     var redirectionURLs = {
         "D0": baseRedirectURL + "&prefill_Station=" + selectedStation,
